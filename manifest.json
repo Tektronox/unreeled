@@ -1,0 +1,25 @@
+{
+    "name": "Unreeled",
+    "version": "0.0.1",
+    "description": "Removing reels and other unwanted content from Instagram",
+    "permissions": ["storage", "tabs"],
+    "host_permissions": ["https://*.instagram.com/*"],
+
+    "content_scripts": [
+      {
+        "matches": ["https://*.instagram.com/*"],
+        "js": ["contentScript.js"]
+      }
+    ],
+  
+    "action": {
+      "default_icon": {
+        "16": "assets/ext-icon.png",
+        "24": "assets/ext-icon.png",
+        "32": "assets/ext-icon.png"
+      },
+      "default_title": "Unreeled",
+      "default_popup": "popup.html"
+    },
+    "manifest_version": 3
+  }
