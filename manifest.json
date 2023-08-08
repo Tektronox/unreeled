@@ -4,7 +4,9 @@
     "description": "Removing reels and other unwanted content from Instagram",
     "permissions": ["storage", "tabs"],
     "host_permissions": ["https://*.instagram.com/*"],
-
+    "background": {
+      "service_worker": "background.js"
+    },
     "content_scripts": [
       {
         "matches": ["https://*.instagram.com/*"],

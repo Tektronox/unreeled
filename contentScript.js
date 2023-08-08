@@ -1,33 +1,65 @@
 console.log('contentScript.js loaded');
 
-// read the url and redirect to following page if on the home page
-const url = window.location.href;
-if (url === 'https://www.instagram.com/') {
-    window.location.href = 'https://www.instagram.com/?variant=following';
-}
+const followingPath = "//div[@aria-label='Following']";
+const topBarPath = followingPath + "/../../../..";
+const reelsButtonPath = "//a[@href='/reels/']/../../..";
+const exploreButtonPath = "//a[@href='/explore/']/../../..";
 
-// remove for your / following  top bar
-const topBarClasses = "xvbhtw8 xixxii4 x13vifvy xk3oba8 xh8yej3 x1mcj5oc";
-const topBar = document.getElementsByClassName(topBarClasses)[0];
-topBar.parentElement.hidden = true;
+const getXPathElement = (path) => {
+    return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+};
+    
+const getFollowingTab = () => {
+    return getXPathElement(followingPath);
+};
 
-// remove insta logo link
-const linkClasses = "x2lah0s x1to3lk4 x1n2onr6 xh8yej3"
-const link = document.getElementsByClassName(linkClasses)[0];
-link.hidden = true;
+const getTopBar = () => {
+    return getXPathElement(topBarPath);
+};
 
-// remove unwanted sidebar elements
-const elementsWithHref = document.querySelectorAll('[href]');
-const linksToRemove = ["/explore/", "/reels/"]
-let targetElements = [];
-for (const element of elementsWithHref) {
-    if (linksToRemove.includes(element.getAttribute('href'))) {
-        element.parentElement.parentElement.parentElement.hidden = true;
-        console.log('removed element: ', element);
+const getReelsButton = () => {
+    return getXPathElement(reelsButtonPath);
+};
+
+const getExploreButton = () => {
+    return getXPathElement(exploreButtonPath);
+};
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    const { type } = request;
+    if (type === 'NEW') {
+        //console.log('received message');
+        removeStuff();
     }
-}
+});
+
+const removeStuff = () => {
+    const url = window.location.href;
+    if (url === 'https://www.instagram.com/') {
+    window.location.href = 'https://www.instagram.com/?variant=following';
+    }
+
+    // click on the following tab if it exists and remove the for you / following bar
+    const followingTab = getFollowingTab();
+    if (followingTab) {
+        //followingTab.click();
+        getTopBar().remove();
+    }
+
+    const reelsButton = getReelsButton();
+    if (reelsButton) {
+        reelsButton.remove();
+    }
+
+    const exploreButton = getExploreButton();
+    if (exploreButton) {
+        exploreButton.remove();
+    }
+};
 
 
 
 
+
+removeStuff();
 console.log('contentScript.js finished');
