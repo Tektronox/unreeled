@@ -1,4 +1,4 @@
-console.log('contentScript.js loaded');
+//console.log('contentScript.js loaded');
 
 const followingPath = "//div[@aria-label='Following']";
 const topBarPath = followingPath + "/../../../..";
@@ -19,22 +19,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 const removeStuff = () => {
     const url = window.location.href;
-    console.log('removeStuff called, url: ' + url);
+    //console.log('removeStuff called, url: ' + url);
     
     if (url === 'https://www.instagram.com/') {
     window.location.href = 'https://www.instagram.com/?variant=following';
     }
     else if (url === 'https://www.instagram.com/?variant=following') {
         
-        // const followingTab = locateElementByXPath(followingPath, 1000);
-        // if (followingTab) {
-        //     //followingTab.click();
-        //     getTopBar().remove();
-        // }
-        // else {
-        //     console.log('followingTab not found');
-        // }
-
         locateWithXPath(topBarPath, 1000)
             .then((topBarPath) => {
                 topBarPath.remove();
@@ -79,9 +70,5 @@ const locateWithXPath = (xpath, timeout) => {
     return new Promise(checkCondition);
 };    
 
-
-
-
-
 removeStuff();
-console.log('contentScript.js finished');
+//console.log('contentScript.js finished');
