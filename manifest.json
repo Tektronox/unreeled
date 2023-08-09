@@ -16,9 +16,10 @@
   
     "action": {
       "default_icon": {
-        "16": "assets/ext-icon.png",
-        "24": "assets/ext-icon.png",
-        "32": "assets/ext-icon.png"
+        "16": "assets/insta-black-white-16.png",
+        "24": "assets/insta-black-white-24.png",
+        "32": "assets/insta-black-white-32.png",
+        "128": "assets/insta-black-white-128.png"
       },
       "default_title": "Unreeled",
       "default_popup": "popup.html"
