@@ -24,14 +24,15 @@ const removeStuff = () => {
     if (url === 'https://www.instagram.com/') {
     window.location.href = 'https://www.instagram.com/?variant=following';
     }
-    else if (url === 'https://www.instagram.com/?variant=following') {
+    //  (url === 'https://www.instagram.com/?variant=following')
+    else{
         
         locateWithXPath(topBarPath, 1000)
             .then((topBarPath) => {
                 topBarPath.remove();
             })
             .catch((error) => {
-                console.log('followingTab not found', error);
+                //console.log('followingTab not found', error);
             });
 
         locateWithXPath(reelsButtonPath, 1000)
@@ -39,7 +40,7 @@ const removeStuff = () => {
                 reelsButton.remove();
             })
             .catch((error) => {
-                console.log('reelsButton not found', error);
+                //console.log('reelsButton not found', error);
             });
 
         locateWithXPath(exploreButtonPath, 1000)
@@ -47,7 +48,7 @@ const removeStuff = () => {
                 exploreButton.remove();
             })
             .catch((error) => {
-                console.log('exploreButton not found', error);
+                //console.log('exploreButton not found', error);
             });
     }
 };
